@@ -1,15 +1,21 @@
-## dlib-android-app
+## Fast Face for Android !
 
-[![Build Status](https://travis-ci.org/tzutalin/dlib-android-app.png)](https://travis-ci.org/tzutalin/dlib-android-app)
-[ ![Download](https://api.bintray.com/packages/tzutalin/maven/dlib-android-app/images/download.svg) ](https://bintray.com/tzutalin/maven/dlib-android-app/_latestVersion)
+Fast Face is an android application which detects facial landmark. <br />
+It detects 68 landmarks in human face, chin to eyebrow. <br />
 
-See http://dlib.net for the main project documentation.
+I changed the source code & optimized the dlib library. <br />
+As a result, Fast Face speeds up 2x or more from the original. <br />
+If you guys already improved or want to improve this code, feel free to contact me. <br />
+Enjoy :)
 
-See [dlib-android](https://github.com/tzutalin/dlib-android) for JNI lib. Refer to dlib-android/jni/jnilib_ex
+## Environments
+### PHONE : SAMSUNG-A8 2015
+### API   : 25 (Android 7.1)
+### TIME  : 60ms ~ 80ms
 
-###Grap the source
-
-`$ git clone https://github.com/tzutalin/dlib-android-app.git`
+## References
+Here is the original source code [dlib-android](https://github.com/tzutalin/dlib-android) <br />
+See also http://dlib.net for the main project documentation. <br />
 
 ### Features
 
@@ -19,60 +25,6 @@ See [dlib-android](https://github.com/tzutalin/dlib-android) for JNI lib. Refer 
 
 * Facial Landmark/Expression
 
-### Demo
-![](demo/demo1.png)
-![](demo/demo2.png)
-![](demo/demo3.png)
-
-[![Demo video](https://j.gifs.com/82n7Oo.gif)](https://www.youtube.com/watch?v=TbX3t7QNhvs)
-
-### Build
-
-#### Android app
-* Open Android studio to build
-
-* Use command line to build (Optional)
-
-On Windows platforms, type this command:
-
-`$ gradlew.bat assembleDebug`
-
-On Mac OS and Linux platforms, type these commands:
-
-```
-$ ./gradlew assembleDebug
-
-or
-
-$ make ; make install
-
-```
-
-#### Update shared lib (Optional)
-You can build shared library from [dlib-android](https://github.com/tzutalin/dlib-android)
-
-Copy the shared libray to ./dlib/src/main/jniLibs/
-
-### Try directly
-
-Install the apk
-
-`$ adb install demo/app-debug.apk`
-
-Otherwise, import the library to your build.gradle
-
-```
-repositories {
-    maven {
-        url 'https://dl.bintray.com/tzutalin/maven'
-    }
-}
-
-dependencies {
-    compile 'com.tzutalin.dlib-android-app:dlib:1.0.4'
-}
-
-```
 
 ### Sample code
 
@@ -95,14 +47,6 @@ for (final VisionDetRet ret : results) {
     }
 }
 ```
-
-Pedestrian detection
-
-```java
-Pedestrian pedestrianDet = new PedestrianDet();
-List<VisionDetRet> personList = pedestrianDet.detect(imgPath);
-```
-
 
 ### License
 [License](LICENSE.md)
