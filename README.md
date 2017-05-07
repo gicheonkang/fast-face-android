@@ -16,13 +16,10 @@ So, if you guys already improved or want to improve this code, feel free to cont
 * TIME   : 60ms ~ 70ms
 <br />
 
-
 ### Features
 
 * Support HOG detector
-
 * HOG Face detection
-
 * Facial Landmark/Expression
 <br />
 
