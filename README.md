@@ -9,9 +9,9 @@ If you guys already improved or want to improve this code, feel free to contact 
 Enjoy :)
 
 ## Environments
-### PHONE : SAMSUNG-A8 2015
-### API   : 25 (Android 7.1)
-### TIME  : 60ms ~ 80ms
+* PHONE : SAMSUNG-A8 2015
+* API   : 25 (Android 7.1)
+* TIME  : 60ms ~ 80ms
 
 ## References
 Here is the original source code [dlib-android](https://github.com/tzutalin/dlib-android) <br />
