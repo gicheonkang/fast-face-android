@@ -14,13 +14,13 @@ So, if you guys already improved or want to improve this code, feel free to cont
 * DEVICE : SAMSUNG-A8 2015
 * API    : 25 (Android 7.1)
 * TIME   : 60ms ~ 70ms
-
 <br />
+
 ## References
 Here is the original source code [dlib-android](https://github.com/tzutalin/dlib-android) <br />
 See also http://dlib.net for the main project documentation. <br />
-
 <br />
+
 ### Features
 
 * Support HOG detector
@@ -28,8 +28,8 @@ See also http://dlib.net for the main project documentation. <br />
 * HOG Face detection
 
 * Facial Landmark/Expression
-
 <br />
+
 ### Sample code
 
 Facial landmark detection
