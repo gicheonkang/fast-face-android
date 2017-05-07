@@ -10,16 +10,12 @@ I think it is not the best one, there are some issues that can be more speedy on
 So, if you guys already improved or want to improve this code, feel free to contact me. Test and Enjoy it :) <br />
 <br />
 
-## Environments
+### Environments
 * DEVICE : SAMSUNG-A8 2015
 * API    : 25 (Android 7.1)
 * TIME   : 60ms ~ 70ms
 <br />
 
-## References
-Here is the original source code [dlib-android](https://github.com/tzutalin/dlib-android) <br />
-See also http://dlib.net for the main project documentation. <br />
-<br />
 
 ### Features
 
