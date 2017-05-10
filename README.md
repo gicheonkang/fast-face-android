@@ -16,6 +16,9 @@ So, if you guys already improved or want to improve this code, feel free to cont
 * TIME   : 60ms ~ 70ms
 <br />
 
+### Demo
+![](demo/demo.png)
+
 ### Features
 
 * Support HOG detector
