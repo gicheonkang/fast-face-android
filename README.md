@@ -17,7 +17,7 @@ So, if you guys already improved or want to improve this code, feel free to cont
 <br />
 
 ### Demo
-<img src="demo/demo.png" width="100">
+<img src="demo/demo.png" width="300">
 
 ### Features
 
