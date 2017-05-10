@@ -56,7 +56,7 @@ import java.lang.System.*;
 public class OnGetImageListener implements OnImageAvailableListener {
     private static final boolean SAVE_PREVIEW_BITMAP = false;
 
-    //324, 648, 972, 1296, 224, 448, 672,976
+    //324, 648, 972, 1296, 224, 448, 672, 976, 1344
     private static final int INPUT_SIZE = 672;
     private static final String TAG = "OnGetImageListener";
 
@@ -69,6 +69,7 @@ public class OnGetImageListener implements OnImageAvailableListener {
     private Bitmap mRGBframeBitmap = null;
     private Bitmap mCroppedBitmap = null;
     private Bitmap mResizedBitmap = null;
+    private Bitmap mInversedBipmap = null;
 
     private boolean mIsComputing = false;
     private Handler mInferenceHandler;
@@ -78,6 +79,8 @@ public class OnGetImageListener implements OnImageAvailableListener {
     private TrasparentTitleView mTransparentTitleView;
     private FloatingCameraWindow mWindow;
     private Paint mFaceLandmardkPaint;
+
+    private int mframeNum = 0;
 
     public void initialize(
             final Context context,
@@ -149,21 +152,11 @@ public class OnGetImageListener implements OnImageAvailableListener {
         canvas.drawBitmap(src, matrix, null);
     }
 
-    public Bitmap toGrayscale(Bitmap bmpOriginal)
-    {
-        int width, height;
-        height = bmpOriginal.getHeight();
-        width = bmpOriginal.getWidth();
-
-        Bitmap bmpGrayscale = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        Canvas c = new Canvas(bmpGrayscale);
-        Paint paint = new Paint();
-        ColorMatrix cm = new ColorMatrix();
-        cm.setSaturation(0);
-        ColorMatrixColorFilter f = new ColorMatrixColorFilter(cm);
-        paint.setColorFilter(f);
-        c.drawBitmap(bmpOriginal, 0, 0, paint);
-        return bmpGrayscale;
+    public Bitmap imageSideInversion(Bitmap src){
+        Matrix sideInversion = new Matrix();
+        sideInversion.setScale(-1, 1);
+        Bitmap inversedImage = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), sideInversion, false);
+        return inversedImage;
     }
 
     @Override
@@ -234,13 +227,9 @@ public class OnGetImageListener implements OnImageAvailableListener {
 
         mRGBframeBitmap.setPixels(mRGBBytes, 0, mPreviewWdith, 0, 0, mPreviewWdith, mPreviewHeight);
         drawResizedBitmap(mRGBframeBitmap, mCroppedBitmap);
-        mResizedBitmap = Bitmap.createScaledBitmap(mCroppedBitmap, INPUT_SIZE/3, INPUT_SIZE/3, true);
 
-        //if (SAVE_PREVIEW_BITMAP) {
-        //    ImageUtils.saveBitmap(mCroppedBitmap);
-        //}
-
-
+        mInversedBipmap = imageSideInversion(mCroppedBitmap);
+        mResizedBitmap = Bitmap.createScaledBitmap(mInversedBipmap, INPUT_SIZE/3, INPUT_SIZE/3, true);
 
         mInferenceHandler.post(
                 new Runnable() {
@@ -252,38 +241,34 @@ public class OnGetImageListener implements OnImageAvailableListener {
                             FileUtils.copyFileFromRawToOthers(mContext, R.raw.shape_predictor_68_face_landmarks, Constants.getFaceShapeModelPath());
                         }
 
-                        long startTime = System.currentTimeMillis();
-                        //Bitmap bm = toGrayscale(mResizedBitmap);
-                        List<VisionDetRet> results;
-                        synchronized (OnGetImageListener.this) {
-                            results = mFaceDet.detect(mResizedBitmap);
-                        }
+                        if(mframeNum % 3 == 0){
+                            List<VisionDetRet> results;
+                            long startTime = System.currentTimeMillis();
+                            synchronized (OnGetImageListener.this) {
+                                results = mFaceDet.detect(mResizedBitmap);
+                            }
+			    long endTime = System.currentTimeMillis();
+                            mTransparentTitleView.setText("Time cost: " + String.valueOf((endTime - startTime) / 1000f) + " sec");		    
 
-                        long endTime = System.currentTimeMillis();
-                        mTransparentTitleView.setText("Time cost: " + String.valueOf((endTime - startTime) / 1000f) + " sec");
+                            // Draw on bitmap
+                            if (results.size() != 0) {
+                                for (final VisionDetRet ret : results) {
+                                    float resizeRatio = 3.0f;
+                                    Canvas canvas = new Canvas(mInversedBipmap);
 
-                        // Draw on bitmap
-                        if (results != null) {
-                            for (final VisionDetRet ret : results) {
-                                float resizeRatio = 3.0f;
-                                //Rect bounds = new Rect();
-                                //bounds.left = (int) (ret.getLeft() * resizeRatio);
-                                //bounds.top = (int) (ret.getTop() * resizeRatio);
-                                //bounds.right = (int) (ret.getRight() * resizeRatio);
-                                //bounds.bottom = (int) (ret.getBottom() * resizeRatio);
-                                Canvas canvas = new Canvas(mCroppedBitmap);
-                                //canvas.drawRect(bounds, mFaceLandmardkPaint);
-
-                                // Draw landmark
-                                ArrayList<Point> landmarks = ret.getFaceLandmarks();
-                                for (Point point : landmarks) {
-                                    int pointX = (int) (point.x * resizeRatio);
-                                    int pointY = (int) (point.y * resizeRatio);
-                                    canvas.drawCircle(pointX, pointY, 4, mFaceLandmardkPaint);
+                                    // Draw landmark
+                                    ArrayList<Point> landmarks = ret.getFaceLandmarks();
+                                    for (Point point : landmarks) {
+                                        int pointX = (int) (point.x * resizeRatio);
+                                        int pointY = (int) (point.y * resizeRatio);
+                                        canvas.drawCircle(pointX, pointY, 4, mFaceLandmardkPaint);
+                                    }
                                 }
                             }
                         }
-                        mWindow.setRGBBitmap(mCroppedBitmap);
+
+                        mframeNum++;
+                        mWindow.setRGBBitmap(mInversedBipmap);
                         mIsComputing = false;
                     }
 
