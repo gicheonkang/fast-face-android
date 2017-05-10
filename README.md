@@ -17,7 +17,7 @@ So, if you guys already improved or want to improve this code, feel free to cont
 <br />
 
 ### Demo
-![](demo/demo.png)
+![](demo/demo.png = 50x100)
 
 ### Features
 
