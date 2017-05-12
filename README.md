@@ -12,7 +12,7 @@ So, if you guys already improved or want to improve this code, feel free to cont
 
 ### Environments
 * DEVICE : SAMSUNG-A8 2015
-* API    : 25 (Android 7.1)
+* API    : 23 (Android 6.0.1)
 * TIME   : 60ms ~ 70ms
 
 
