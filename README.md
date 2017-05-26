@@ -12,9 +12,9 @@ So, if you guys already improved or want to improve this code, feel free to cont
 <br />
 
 ### Environments
-* DEVICE : SAMSUNG-A8 2015
+* DEVICE : SAMSUNG-A8 2015(@cortex-a53 core)
 * API    : 23 (Android 6.0.1)
-* TIME   : 60ms ~ 70ms
+* TIME   : 50ms ~ 70ms
 
 
 ### Demo
@@ -31,21 +31,28 @@ So, if you guys already improved or want to improve this code, feel free to cont
 
 Facial landmark detection
 ```java
-FaceDet faceDet = new FaceDet(Constants.getFaceShapeModelPath());
-Bitmap bitmap = BitmapFactory.decodeFile("Image Path");
-List<VisionDetRet> results = faceDet.detect(bitmap);
-for (final VisionDetRet ret : results) {
-    String label = ret.getLabel();
-    int rectLeft = ret.getLeft();
-    int rectTop = ret.getTop();
-    int rectRight = ret.getRight();
-    int rectBottom = ret.getBottom();
-    // Get 68 landmark points
-    ArrayList<Point> landmarks = ret.getFaceLandmarks();
-    for (Point point : landmarks) {
-        int pointX = point.x;
-        int pointY = point.y;
+
+// detecs every 3 frames
+if(mframeNum % 3 == 0){
+    synchronized (OnGetImageListener.this) {
+        results = mFaceDet.detect(mResizedBitmap);
     }
+}
+
+// Draw on bitmap
+if (results.size() != 0) {
+    for (final VisionDetRet ret : results) {
+        float resizeRatio = 4.5f;
+        Canvas canvas = new Canvas(mInversedBipmap);
+
+        // Draw landmark
+        ArrayList<Point> landmarks = ret.getFaceLandmarks();
+        for (Point point : landmarks) {
+            int pointX = (int) (point.x * resizeRatio);
+            int pointY = (int) (point.y * resizeRatio);
+            canvas.drawCircle(pointX, pointY, 4, mFaceLandmardkPaint);
+        }
+     }
 }
 ```
 
