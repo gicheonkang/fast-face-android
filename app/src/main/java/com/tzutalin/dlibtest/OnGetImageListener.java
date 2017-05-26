@@ -57,7 +57,7 @@ public class OnGetImageListener implements OnImageAvailableListener {
     private static final boolean SAVE_PREVIEW_BITMAP = false;
 
     //324, 648, 972, 1296, 224, 448, 672, 976, 1344
-    private static final int INPUT_SIZE = 672;
+    private static final int INPUT_SIZE = 976;
     private static final String TAG = "OnGetImageListener";
 
     private int mScreenRotation = 90;
@@ -230,7 +230,7 @@ public class OnGetImageListener implements OnImageAvailableListener {
         drawResizedBitmap(mRGBframeBitmap, mCroppedBitmap);
 
         mInversedBipmap = imageSideInversion(mCroppedBitmap);
-        mResizedBitmap = Bitmap.createScaledBitmap(mInversedBipmap, INPUT_SIZE/3, INPUT_SIZE/3, true);
+        mResizedBitmap = Bitmap.createScaledBitmap(mInversedBipmap, (int)(INPUT_SIZE/4.5), (int)(INPUT_SIZE/4.5), true);
 
         mInferenceHandler.post(
                 new Runnable() {
@@ -254,7 +254,7 @@ public class OnGetImageListener implements OnImageAvailableListener {
                         // Draw on bitmap
                         if (results.size() != 0) {
                             for (final VisionDetRet ret : results) {
-                                float resizeRatio = 3.0f;
+                                float resizeRatio = 4.5f;
                                 Canvas canvas = new Canvas(mInversedBipmap);
 
                                 // Draw landmark
