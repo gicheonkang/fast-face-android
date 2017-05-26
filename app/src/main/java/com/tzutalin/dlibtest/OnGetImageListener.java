@@ -62,6 +62,7 @@ public class OnGetImageListener implements OnImageAvailableListener {
 
     private int mScreenRotation = 90;
 
+    private List<VisionDetRet> results;
     private int mPreviewWdith = 0;
     private int mPreviewHeight = 0;
     private byte[][] mYUVBytes;
@@ -242,27 +243,26 @@ public class OnGetImageListener implements OnImageAvailableListener {
                         }
 
                         if(mframeNum % 3 == 0){
-                            List<VisionDetRet> results;
                             long startTime = System.currentTimeMillis();
                             synchronized (OnGetImageListener.this) {
                                 results = mFaceDet.detect(mResizedBitmap);
                             }
-			    long endTime = System.currentTimeMillis();
-                            mTransparentTitleView.setText("Time cost: " + String.valueOf((endTime - startTime) / 1000f) + " sec");		    
+			                long endTime = System.currentTimeMillis();
+                            mTransparentTitleView.setText("Time cost: " + String.valueOf((endTime - startTime) / 1000f) + " sec");
+                        }
 
-                            // Draw on bitmap
-                            if (results.size() != 0) {
-                                for (final VisionDetRet ret : results) {
-                                    float resizeRatio = 3.0f;
-                                    Canvas canvas = new Canvas(mInversedBipmap);
+                        // Draw on bitmap
+                        if (results.size() != 0) {
+                            for (final VisionDetRet ret : results) {
+                                float resizeRatio = 3.0f;
+                                Canvas canvas = new Canvas(mInversedBipmap);
 
-                                    // Draw landmark
-                                    ArrayList<Point> landmarks = ret.getFaceLandmarks();
-                                    for (Point point : landmarks) {
-                                        int pointX = (int) (point.x * resizeRatio);
-                                        int pointY = (int) (point.y * resizeRatio);
-                                        canvas.drawCircle(pointX, pointY, 4, mFaceLandmardkPaint);
-                                    }
+                                // Draw landmark
+                                ArrayList<Point> landmarks = ret.getFaceLandmarks();
+                                for (Point point : landmarks) {
+                                    int pointX = (int) (point.x * resizeRatio);
+                                    int pointY = (int) (point.y * resizeRatio);
+                                    canvas.drawCircle(pointX, pointY, 4, mFaceLandmardkPaint);
                                 }
                             }
                         }
