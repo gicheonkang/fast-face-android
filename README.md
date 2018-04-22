@@ -1,8 +1,7 @@
-# Fast Face for Android !
+# Android Application for Face Landmark Detection
 
-Fast Face is an android application which detects facial landmark . <br />
-It detects 68 landmarks of human face, chin to eyebrow in real-time. <br />
-Also, it can detect people up to 3 if you guys show your frontal faces. <br /> 
+Fast Face is an android application which detects facial landmark . It detects 68 landmarks of human face <br />
+chin to eyebrow in real-time. Also, it can detect people up to 3 if you guys show your frontal faces. <br /> 
 
 It is an upgraded version of [dlib-android](https://github.com/tzutalin/dlib-android), Not only revising the code but additional task for optimizing dlib library was needed. 
 As a result, Fast Face speeds up 2x or more from the original. Higher resoluton, Higher speed.<br />
@@ -15,17 +14,19 @@ So, if you guys already improved or want to improve this code, feel free to cont
 * DEVICE : SAMSUNG-A8 2015(@cortex-a53 core)
 * API    : 23 (Android 6.0.1)
 * TIME   : 50ms ~ 70ms
-
+* OS     : Android
+<br />
 
 ## Demo
 <img src="demo/demo.png" width="300">
+<br />
 
 ## Features
 
 * Support HOG detector
 * HOG Face detection
 * Facial Landmark/Expression
-
+<br />
 
 ## Sample code
 
@@ -55,6 +56,7 @@ if (results.size() != 0) {
      }
 }
 ```
+<br />
 
-### License
+## License
 [License](LICENSE.md)
