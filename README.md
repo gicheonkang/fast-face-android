@@ -10,15 +10,14 @@ I think it is not the best one, there are some issues that can be more speedy on
 So, if you guys already improved or want to improve this code, feel free to contact me. Test and Enjoy it :) <br />
 <br />
 
+## Screenshot
+<img src="demo/demo.png" width="300">
+<br />
+
 ## Environments
 * DEVICE : SAMSUNG-A8 2015(@cortex-a53 core)
 * API    : 23 (Android 6.0.1)
 * TIME   : 50ms ~ 70ms
-* OS     : Android
-<br />
-
-## Demo
-<img src="demo/demo.png" width="300">
 <br />
 
 ## Features
